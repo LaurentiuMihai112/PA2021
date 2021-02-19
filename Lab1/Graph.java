@@ -102,19 +102,21 @@ public class Graph {
         int a[][] = new int[n][n];
         int nrc = nrCompConexe(m, n, visited);
         if (nrc == 1) {
-            System.out.println("Graful este conex, vom afisa matricea unui arbore partial daca numarul de noduri n<=10");
-            if (n <= 10) {
-                printMatrix(a, n);
-            }
+            System.out.println("Graful este conex, vom afisa matricea unui arbore partial");
             visited[0] = -1;
             for (int i = 1; i < n; i++) {
                 visited[i] = 0;
             }
             DFSTree(0, n, m, a, visited);
+            if (n <= 10) {
+                printMatrix(a, n);
+            }
             for (int i = 0; i < n; i++) {
                 visited[i] = 0;
             }
-            treeStructure(0, a, n, visited, 1);
+            if (n <= 50) {
+                treeStructure(0, a, n, visited, 1);
+            }
         } else {
             System.out.println("Graful nu este conex");
         }
