@@ -86,12 +86,13 @@ public class Graph {
 
     public static void main(String[] args) {
 
+
         Scanner sc = new Scanner(System.in);
         System.out.print("Introduceti numarul de noduri: ");
 
         int n = sc.nextInt();
         sc.close();
-
+        long ts=System.nanoTime();
         int m[][] = new int[n][n];
         randomizeMatrix(m, n);
 
@@ -102,24 +103,27 @@ public class Graph {
         int a[][] = new int[n][n];
         int nrc = nrCompConexe(m, n, visited);
         if (nrc == 1) {
-            System.out.println("Graful este conex, vom afisa matricea unui arbore partial");
+            System.out.println("Graful este conex!");
             visited[0] = -1;
             for (int i = 1; i < n; i++) {
                 visited[i] = 0;
             }
             DFSTree(0, n, m, a, visited);
-            if (n <= 10) {
+            if (n <= 50) {
+                System.out.println("Vom afisa matricea unui arbore partial");
                 printMatrix(a, n);
             }
             for (int i = 0; i < n; i++) {
                 visited[i] = 0;
             }
-            if (n <= 50) {
+            if (n <= 200) {
                 treeStructure(0, a, n, visited, 1);
             }
         } else {
-            System.out.println("Graful nu este conex");
+            System.out.println("Graful are "+nrc+" componenete conexe");
         }
-
+        long tf=System.nanoTime();
+        long t=tf-ts;
+        System.out.println("Timp in nanosecunde : " + t);
     }
 }
