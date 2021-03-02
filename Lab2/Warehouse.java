@@ -1,6 +1,6 @@
 public class Warehouse extends Source {
     public Warehouse(String name, int supply) {
-        super(name, supply, 0);
+        super(name, supply, SourceType.WAREHOUSE);
     }
 
     @Override

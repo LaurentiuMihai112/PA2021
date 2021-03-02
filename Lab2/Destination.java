@@ -14,6 +14,7 @@ public class Destination {
         this.name = name;
         this.demand = demand;
     }
+
     public Destination() {
         this.demand = 0;
     }

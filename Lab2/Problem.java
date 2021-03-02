@@ -4,11 +4,13 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Problem {
-    private int numberOfSources, numberOfDestinations;
-    private Destination[] destinations;
-    private Source[] sources;
+    protected int numberOfSources, numberOfDestinations;
+    protected Destination[] destinations;
+    protected Source[] sources;
 
-
+    /**
+     * Creates random instances of the problem, having a given number of sources and destinations
+     */
     public Problem(int numberOfSources, int numberOfDestinations) {
         this.numberOfSources = numberOfSources;
         this.numberOfDestinations = numberOfDestinations;
@@ -44,6 +46,9 @@ public class Problem {
         }
     }
 
+    /**
+     * Creates the instance given in the example
+     */
     public Problem() {
         try {
             File myFile1 = new File("names.txt");
@@ -85,6 +90,36 @@ public class Problem {
         }
     }
 
+    public Problem(int maxNumberOfLocations) {
+        this.numberOfSources = 0;
+        this.numberOfDestinations = 0;
+        sources = new Source[maxNumberOfLocations];
+        destinations = new Destination[maxNumberOfLocations];
+    }
+
+    public void addSource(Source newSource) {
+        for (int i = 0; i < numberOfSources; i++)
+            if (sources[i].equals(newSource)) {
+                System.out.println("Already existing source");
+                return;
+            }
+        if (newSource.getType() == SourceType.FACTORY)
+            sources[numberOfSources] = new Factory(newSource.getName(), newSource.getSupply());
+        else
+            sources[numberOfSources] = new Warehouse(newSource.getName(), newSource.getSupply());
+        this.numberOfSources++;
+    }
+
+    public void addDestination(Destination newDestination) {
+        for (int i = 0; i < numberOfDestinations; i++)
+            if (destinations[i].equals(newDestination)) {
+                System.out.println("Already existing destination");
+                return;
+            }
+        destinations[numberOfDestinations] = newDestination;
+        this.numberOfDestinations++;
+    }
+
     @Override
     public String toString() {
 
@@ -111,53 +146,6 @@ public class Problem {
             return " ";
         }
         return info + "\n";
-    }
-
-
-    public void solution() {
-        int total = 0;
-        long ts = System.nanoTime();
-        for (int i = 0; i < numberOfSources; i++) {
-            int supply = sources[i].getSupply();
-            int[] prices = sources[i].getPrice();
-            while (supply > 0) {
-                int min = Integer.MAX_VALUE, dest = 0, d = 0, price = 0;
-                for (int j = 0; j < numberOfDestinations; j++) {
-                    if (prices[j] < min && destinations[j].getDemand() > 0) {
-                        min = prices[j];
-                        price = prices[j];
-                        dest = j;
-                        d = destinations[dest].getDemand();
-
-                    }
-                }
-                if (min == Integer.MAX_VALUE)
-                    break;
-                if (d <= supply && d != 0) {
-                    total += price * d;
-                    if (!(numberOfDestinations > 20 || numberOfSources > 20)) {
-                        System.out.println(sources[i].getName() + " -> " + destinations[dest].getName() + " " + d + " unitati * cost " + price + " = " + price * d);
-                    }
-                    sources[i].setSupply(supply - d);
-                    supply -= d;
-                    destinations[dest].setDemand(0);
-
-                } else {
-                    total += supply * price;
-                    if (!(numberOfDestinations > 20 || numberOfSources > 20)) {
-                        System.out.println(sources[i].getName() + " -> " + destinations[dest].getName() + " " + supply + " unitati * cost " + price + " = " + supply * price);
-
-                    }
-                    destinations[dest].setDemand(d - supply);
-                    supply = 0;
-                    sources[i].setSupply(0);
-                }
-            }
-        }
-        System.out.println("Total cost = " + total);
-        long tf = System.nanoTime();
-        long t = tf - ts;
-        System.out.println("Timp in nanosecunde : " + t);
     }
 }
 

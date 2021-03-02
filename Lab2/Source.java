@@ -30,10 +30,10 @@ public abstract class Source {
         this.type = SourceType.NOT_SPECIFIED;
     }
 
-    public Source(String name, int supply, int type) {
+    public Source(String name, int supply, SourceType type) {
         this.name = name;
         this.supply = supply;
-        this.setType(type);
+        this.type = type;
     }
 
     @Override
@@ -58,17 +58,8 @@ public abstract class Source {
         return type;
     }
 
-    public void setType(int type) {
-        switch (type) {
-            case 0:
-                this.type = SourceType.WAREHOUSE;
-                break;
-            case 1:
-                this.type = SourceType.FACTORY;
-                break;
-            default:
-                this.type = SourceType.NOT_SPECIFIED;
-        }
+    public void setType(SourceType type) {
+        this.type = type;
     }
 
     @Override
