@@ -7,7 +7,31 @@ public class City {
     private List<Location> locationsList;
 
     public void visitableNotPayableLocations() {
+        List<Location> newList=new ArrayList<>();
+        for (Location location : locationsList) {
+            if (location instanceof Visitable && !(location instanceof Payable)){
+                newList.add(location);
+            }
+        }
+        System.out.println("The free visitable locations are:");
+        newList.sort(Location::compareByOpeningHour);
+        for (Location location : newList){
+            System.out.printf(location+" ");
+            System.out.println(location.getOpeningHour());
+        }
+        System.out.println();
+    }
 
+    public List<Location> getLocationsList() {
+        return locationsList;
+    }
+
+    public int getNumberOfLocations() {
+        return numberOfLocations;
+    }
+
+    public void sortLocations() {
+        locationsList.sort(Location::compareTo);
     }
 
     public City() {
@@ -22,13 +46,13 @@ public class City {
 
     @Override
     public String toString() {
-        String names="";
-        for(Location l:locationsList){
-            names=names+l.getName()+" ("+l.getType()+")"+"\n";
+        String names = "";
+        for (Location l : locationsList) {
+            names = names + l.getName() + " (" + l.getType() + ")" + "\n";
         }
-        names+="\n\n";
-        for(Location l:locationsList){
-            names=names+l.getName()+"->"+l.getMyMap()+"\n";
+        names += "\n\n";
+        for (Location l : locationsList) {
+            names = names + l.getName() + "->" + l.getMyMap() + "\n";
         }
         return names;
     }

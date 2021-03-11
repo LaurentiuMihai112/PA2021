@@ -6,6 +6,8 @@ public class Hotel extends Location implements Visitable, Payable, Classifiable 
 
     public Hotel(String name, LocalTime openingHour, LocalTime closingHour, String address, int rank, int entryFee) {
         super(name, address, LocationType.HOTEL);
+        super.setOpeningHour(openingHour);
+        super.setClosingHour(closingHour);
     }
 
     @Override
