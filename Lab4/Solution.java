@@ -13,7 +13,7 @@ public class Solution {
         System.out.println("\nRepartition\n");
         for (Student student : problem.studentsList) {
             List<School> pref = student.getRanks();
-            if (student.getScore() >= 4) {
+            if (student.getScore() >= 5) {
                 for (School school : pref) {
                     if (school.getCapacity() != 0) {
                         System.out.format("%s %s %.2f -> %s %s\n",ANSI_GREEN , student ,student.getScore(),school , ANSI_RESET);
