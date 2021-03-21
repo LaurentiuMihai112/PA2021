@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class Item implements Serializable {
     private Integer id;
-    private static Integer number=0;
+    private static Integer number = 0;
     private String name;
     private String location;
     private ItemType type;

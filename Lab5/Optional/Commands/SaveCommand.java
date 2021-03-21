@@ -13,7 +13,7 @@ public class SaveCommand extends Command {
 
     public static void save(Catalog catalog, String path) {
         try {
-            FileOutputStream fileOut = new FileOutputStream(path+catalog.getName());
+            FileOutputStream fileOut = new FileOutputStream(path + catalog.getName());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(catalog);
             out.close();

@@ -5,7 +5,7 @@ import Optional.Items.Item;
 
 public abstract class Command {
     String Command;
-    Catalog catalog ;
+    Catalog catalog;
     Item item;
 
     public Command(String command, Catalog catalog, Item item) {

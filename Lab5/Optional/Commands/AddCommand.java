@@ -10,7 +10,7 @@ public class AddCommand extends Command {
     }
 
     public static void add(Catalog catalog, Item item) {
-        var myList=catalog.getItems();
+        var myList = catalog.getItems();
         myList.add(item);
         catalog.setItems(myList);
     }

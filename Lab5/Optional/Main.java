@@ -4,16 +4,8 @@ import Optional.Commands.*;
 import Optional.Exceptions.IncorrectNameException;
 import Optional.Exceptions.IncorrectPathException;
 import Optional.Items.*;
-import Optional.Items.Image;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
 
-import java.awt.*;
-import java.io.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
@@ -23,11 +15,11 @@ public class Main {
         Scanner myObj = new Scanner(System.in);
         System.out.println("Enter a name for the catalog:");
         catalog.setName(myObj.nextLine());
+        System.out.println("Press help for more");
         while (true) {
             System.out.print("Enter command >>> ");
             String command = myObj.nextLine();
             String[] arguments = command.split(" ");
-
             try {
                 if (arguments.length > 1)
                     throw new IncorrectNameException("Not a valid command");
@@ -103,40 +95,19 @@ public class Main {
                         System.out.println("Playing");
                     }
                     case "report" -> {
-                        Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
-                        cfg.setDirectoryForTemplateLoading(new File("G:/Test/"));
-                        cfg.setDefaultEncoding("UTF-8");
-                        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-                        cfg.setLogTemplateExceptions(false);
-                        cfg.setWrapUncheckedExceptions(true);
-                        cfg.setFallbackOnNullLoopVariable(false);
-
-                        Map<String, Object> report = new HashMap<>();
-
-                        report.put("name", catalog.getName());
-                        report.put("items", catalog.getItems());
-
-                        Template temp = cfg.getTemplate("t.html");
-
-                        Writer fileWriter = new FileWriter(new File("G:/" + catalog.getName() + " report.html"));
-                        try {
-                            temp.process(report, fileWriter);
-
-                        } catch (IOException e) {
-                            System.out.println(e.getMessage());
-                        } finally {
-                            fileWriter.close();
-                        }
-                        Item other = new Other(catalog.getName() + " report", "G:/" + catalog.getName() + " report.html");
-                        File file = new File(other.getLocation());
-                        Desktop desktop = Desktop.getDesktop();
-                        try {
-                            desktop.open(file);
-                        } catch (Exception e1) {
-                            System.out.println(e1.getMessage());
-                        }
+                        ReportCommand.report(catalog);
                     }
                     case "quit" -> System.exit(0);
+                    case "help" -> {
+                        System.out.println("Available commands:");
+                        System.out.println("add");
+                        System.out.println("list");
+                        System.out.println("save");
+                        System.out.println("load");
+                        System.out.println("play");
+                        System.out.println("report");
+                        System.out.println("quit");
+                    }
                     default -> throw new IncorrectNameException("Not a valid command");
                 }
             } catch (Exception e) {
