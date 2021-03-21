@@ -32,7 +32,7 @@ public class ReportCommand extends Command {
         report.put("name", catalog.getName());
         report.put("items", catalog.getItems());
 
-        Template temp = cfg.getTemplate("t.html");
+        Template temp = cfg.getTemplate("template.html");
 
         Writer fileWriter = new FileWriter("G:/" + catalog.getName() + " report.html");
         try {
