@@ -11,7 +11,7 @@ public class MainFrame extends JFrame {
     OptionsPanel optionsPanel;
 
     public MainFrame() {
-        super("My Drawing Application");
+        super("Drawing App");
         init();
     }
 

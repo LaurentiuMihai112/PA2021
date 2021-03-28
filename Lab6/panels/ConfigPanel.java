@@ -10,7 +10,7 @@ public class ConfigPanel extends JPanel {
     private JSpinner sidesField;
     private JSpinner strokeField;
     private JSpinner radiusField;
-    protected JComboBox<ComboItem> colorCombo;
+    private JComboBox<ComboItem> colorCombo;
 
     public ConfigPanel() {
         init();
@@ -26,6 +26,10 @@ public class ConfigPanel extends JPanel {
 
     public JSpinner getStrokeField() {
         return strokeField;
+    }
+
+    public JComboBox<ComboItem> getColorCombo() {
+        return colorCombo;
     }
 
     private void init() {

@@ -15,8 +15,8 @@ import java.util.List;
 public class DrawingPanel extends JPanel {
     final MainFrame frame;
     private static Integer height, width;
-    BufferedImage image;
-    Graphics2D graphics;
+    private BufferedImage image;
+    private Graphics2D graphics;
     private List<Polygon> listOfShapes = new ArrayList<>();
 
     public DrawingPanel(MainFrame frame) {
@@ -25,7 +25,7 @@ public class DrawingPanel extends JPanel {
         init();
     }
 
-    protected void createOffscreenImage() {
+    private void createOffscreenImage() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         height = (int) screenSize.getHeight();
         width = (int) screenSize.getWidth();
@@ -36,7 +36,7 @@ public class DrawingPanel extends JPanel {
     }
 
 
-    protected void init() {
+    private void init() {
         setPreferredSize(new Dimension(width - 90, height - 150));
         setBorder(BorderFactory.createEtchedBorder());
         this.addMouseListener(new MouseAdapter() {
@@ -53,7 +53,7 @@ public class DrawingPanel extends JPanel {
 
         int radius = (int) frame.configPanel.getRadiusField().getValue();
         int sides = (int) frame.configPanel.getSidesField().getValue();
-        ComboItem item = (ComboItem) frame.configPanel.colorCombo.getSelectedItem();
+        ComboItem item = (ComboItem) frame.configPanel.getColorCombo().getSelectedItem();
         if (item == null) {
             throw new AssertionError();
         }
@@ -77,9 +77,17 @@ public class DrawingPanel extends JPanel {
         repaint();
     }
 
+    public void resetCanvas() {
+        this.createOffscreenImage();
+        repaint();
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         g.drawImage(image, 0, 0, this);
     }
-
 }

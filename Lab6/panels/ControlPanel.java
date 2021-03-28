@@ -63,7 +63,7 @@ public class ControlPanel extends JPanel {
             File fileToSave = fileChooser.getSelectedFile();
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
             try {
-                ImageIO.write(frame.canvas.image, "png", new FileOutputStream(fileToSave.getAbsolutePath()));
+                ImageIO.write(frame.canvas.getImage(), "png", new FileOutputStream(fileToSave.getAbsolutePath()));
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
@@ -71,10 +71,8 @@ public class ControlPanel extends JPanel {
     }
 
     private void reset(ActionEvent e) {
-        frame.canvas.removeAll();
-        frame.canvas.repaint();
-        frame.canvas.createOffscreenImage();
-        frame.canvas.init();
+        frame.canvas.resetCanvas();
+
     }
 
     private void exit(ActionEvent e) {
@@ -95,12 +93,6 @@ public class ControlPanel extends JPanel {
         savePanel.add(yesButton);
         savePanel.add(noButton);
         saveFrame.add(savePanel);
-        try {
-            wait(10);
-        } catch (InterruptedException interruptedException) {
-            interruptedException.printStackTrace();
-        }
-        System.exit(0);
     }
 
     private void saveAndExit(ActionEvent e) {
