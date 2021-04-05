@@ -38,7 +38,7 @@ public abstract class Source {
 
     @Override
     public String toString() {
-        return "Source : " + type + name;
+        return "Source : " + type + " " + name;
     }
 
     public Source(String name) {

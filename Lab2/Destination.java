@@ -25,7 +25,7 @@ public class Destination {
 
     @Override
     public String toString() {
-        return name + " : ";
+        return name;
     }
 
     public void setName(String name) {

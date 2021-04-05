@@ -8,6 +8,7 @@ public class Problem {
     protected Destination[] destinations;
     protected Source[] sources;
 
+
     /**
      * Creates random instances of the problem, having a given number of sources and destinations
      */
@@ -90,17 +91,24 @@ public class Problem {
         }
     }
 
-    public Problem(int maxNumberOfLocations) {
+    public Problem(int numberOfLocations) {
         this.numberOfSources = 0;
         this.numberOfDestinations = 0;
-        sources = new Source[maxNumberOfLocations];
-        destinations = new Destination[maxNumberOfLocations];
+        this.sources = new Source[numberOfLocations];
+        this.destinations = new Destination[numberOfLocations];
+    }
+
+    public Problem(Problem other) {
+        this.numberOfSources = other.numberOfSources;
+        this.numberOfDestinations = other.numberOfDestinations;
+        this.sources = other.sources;
+        this.destinations = other.destinations;
     }
 
     public void addSource(Source newSource) {
         for (int i = 0; i < numberOfSources; i++)
             if (sources[i].equals(newSource)) {
-                System.out.println("Already existing source");
+                System.out.println("Already existing source " + sources[i]);
                 return;
             }
         if (newSource.getType() == SourceType.FACTORY)
