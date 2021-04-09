@@ -1,4 +1,3 @@
-package sample;
 
 public class Token {
     public int firstNumber, secondNumber, value;

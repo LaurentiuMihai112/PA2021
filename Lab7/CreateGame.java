@@ -1,4 +1,3 @@
-package sample;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ public class CreateGame {
         numberOfTokens = 0;
         matrixOfTokens = new int[numberOfPlayers][numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {
-            players.add("Player" + i);
+            players.add("Player" + (i + 1));
         }
         System.out.println(players);
         Random random = new Random();
@@ -39,17 +38,16 @@ public class CreateGame {
     public void printGameGrid() {
         final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
         final String ANSI_RESET = "\u001B[0m";
-        System.out.println(ANSI_GREEN_BACKGROUND + "Tokens:"+ ANSI_RESET);
+        System.out.println(ANSI_GREEN_BACKGROUND + "Tokens:" + ANSI_RESET);
+        Integer tokenNumber = 1;
         for (int i = 0; i < numberOfPlayers; i++) {
             for (int j = 0; j < numberOfPlayers; j++) {
                 if (matrixOfTokens[i][j] != 0) {
-                    System.out.println(new Token(i,j,matrixOfTokens[i][j]));
-/*                    System.out.print(ANSI_GREEN_BACKGROUND + matrixOfTokens[i][j] + " " + ANSI_RESET);
-                } else {
-                    System.out.print(matrixOfTokens[i][j] + " ");*/
+                    System.out.print(tokenNumber + " : ");
+                    tokenNumber++;
+                    System.out.println(new Token(i, j, matrixOfTokens[i][j]));
                 }
             }
-/*            System.out.println();*/
         }
     }
 

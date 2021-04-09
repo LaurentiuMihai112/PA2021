@@ -1,34 +1,30 @@
-package sample;
-
-import javafx.stage.Stage;
-
 import java.util.*;
-
-import static java.lang.Thread.sleep;
 
 public class Game {
     CreateGame gameGrid;
     Map<String, List<Token>> tokenSequence = new TreeMap<>();
-    Stage stage;
-    GameGrid grid;
 
-    public Game(Stage stage, int numberOfPlayers) {
-        this.stage = stage;
-
+    public Game(int numberOfPlayers) {
+        Thread timer = new Thread(new Timer());
+        timer.setDaemon(true);
+        timer.start();
         this.gameGrid = new CreateGame(numberOfPlayers);
         int turn = 0;
         Player[] player = new Player[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {
             player[i] = new Player(this, gameGrid.players.get(turn));
         }
+        player[0].setHumanPlayer(true);
         while (gameGrid.getNumberOfTokens() > 0) {
             Runnable runnable = player[turn];
             Thread playerThread = new Thread(runnable);
             playerThread.start();
-            try {
-                playerThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            synchronized (player[turn]) {
+                try {
+                    player[turn].wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             gameGrid.printGameGrid();
@@ -38,11 +34,6 @@ public class Game {
             tokenSequence.get(gameGrid.players.get(turn)).addAll(player[turn].getSequence());
             turn++;
             turn = turn % numberOfPlayers;
-//            try {
-//                sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
         }
         System.out.println(tokenSequence);
         System.out.println();
