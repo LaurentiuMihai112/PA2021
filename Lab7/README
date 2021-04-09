@@ -1,5 +1,5 @@
 //scoring and winner were already done
 added a wait-notify appproach for the players, before i was using join
 added manual player (only bots were available before)
-bot has a "smart approach" trying to find the best available token to create a sequence, at the same time choosing the highest valued token (that satisfies the first criteria)
 added timer with a daemon thread that stops the game after a fixed amount of time
+bot has a "smart approach" trying to find the best available token to create a sequence, at the same time choosing the highest valued token (that satisfies the first criteria)
