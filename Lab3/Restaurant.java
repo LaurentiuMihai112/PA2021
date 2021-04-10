@@ -29,5 +29,4 @@ public class Restaurant extends Location implements Visitable, Payable, Classifi
     }
 
 
-
 }

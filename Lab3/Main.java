@@ -29,16 +29,18 @@ public class Main {
         v4.addToMap(v6, 10);
         v5.addToMap(v4, 30);
         v5.addToMap(v6, 20);
+        v6.addToMap(v1, 30);
 
         System.out.println(myCity);
         myCity.visitableNotPayableLocations();
         myCity.sortLocations();
         System.out.println(myCity);
-        List<Location> myPreferences=new ArrayList<>();
+        List<Location> myPreferences = new ArrayList<>();
         myPreferences.add(v2);
         myPreferences.add(v4);
         myPreferences.add(v6);
-        TravelPlan MyPlan=new TravelPlan(myCity,myPreferences,v1);
+        TravelPlan MyPlan = new TravelPlan(myCity, myPreferences, v1);
         MyPlan.printTotalCost();
+        MyPlan.createVisitingPlan(4, 50);
     }
 }

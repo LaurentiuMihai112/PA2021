@@ -4,19 +4,19 @@ import java.util.List;
 public class City {
     private String name;
     private int numberOfLocations;
-    private List<Location> locationsList;
+    private final List<Location> locationsList;
 
     public void visitableNotPayableLocations() {
-        List<Location> newList=new ArrayList<>();
+        List<Location> newList = new ArrayList<>();
         for (Location location : locationsList) {
-            if (location instanceof Visitable && !(location instanceof Payable)){
+            if (location instanceof Visitable && !(location instanceof Payable)) {
                 newList.add(location);
             }
         }
         System.out.println("The free visitable locations are:");
         newList.sort(Location::compareByOpeningHour);
-        for (Location location : newList){
-            System.out.printf(location+" ");
+        for (Location location : newList) {
+            System.out.print(location + " ");
             System.out.println(location.getOpeningHour());
         }
         System.out.println();
@@ -46,14 +46,14 @@ public class City {
 
     @Override
     public String toString() {
-        String names = "";
+        StringBuilder names = new StringBuilder();
         for (Location l : locationsList) {
-            names = names + l.getName() + " (" + l.getType() + ")" + "\n";
+            names.append(l.getName()).append(" (").append(l.getType()).append(")").append("\n");
         }
-        names += "\n\n";
+        names.append("\n\n");
         for (Location l : locationsList) {
-            names = names + l.getName() + "->" + l.getMyMap() + "\n";
+            names.append(l.getName()).append("->").append(l.getMyMap()).append("\n");
         }
-        return names;
+        return names.toString();
     }
 }
