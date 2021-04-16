@@ -1,6 +1,10 @@
 import DAO_classes.Add;
 import DAO_classes.Find;
 import DAO_classes.Select;
+import Objects.Actor;
+import Objects.Director;
+import Objects.Genre;
+import Objects.Movie;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -11,16 +15,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
-import Objects.*;
-
 public class MovieManager {
     private final ConnectionDB connectionDB;
 
     public MovieManager() throws SQLException, IOException {
-        connectionDB = new ConnectionDB();
+        connectionDB = ConnectionDB.getInstance();
         /*        generateTables();*/
-        getMovieRealData();
-        System.exit(0);
+//        getMovieRealData();
+//        System.exit(0);
         printCommands();
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -79,8 +81,8 @@ public class MovieManager {
         for (Row row : sheet) {
             if (row.getRowNum() % 500 == 0)
                 System.out.println(row.getRowNum());
-//            Add.addMovie(connectionDB.connection, new Movie(row.getCell(0).toString(), row.getCell(1).toString(), row.getCell(2).toString(), row.getCell(3).toString(), row.getCell(4).toString()));
-//            String[] genres = row.getCell(5).toString().split(", ");
+            Add.addMovie(connectionDB.connection, new Movie(row.getCell(0).toString(), row.getCell(1).toString(), row.getCell(2).toString(), row.getCell(3).toString(), row.getCell(4).toString()));
+            String[] genres = row.getCell(5).toString().split(", ");
             var dir = row.getCell(6);
             var act = row.getCell(7);
             if (dir != null) {
@@ -101,16 +103,16 @@ public class MovieManager {
                     }
                 }
             }
-//            for (var genre : genres) {
-//                if (!genresMap.containsKey(genre)) {
-//                    genresMap.put(genre, idGen);
-//                    Add.addGenre(connectionDB.connection, new Genre(idGen.toString(), genre));
-//                    Add.addGenreToMovie(connectionDB.connection, row.getCell(0).toString(), idGen);
-//                    idGen++;
-//                } else {
-//                    Add.addGenreToMovie(connectionDB.connection, row.getCell(0).toString(), genresMap.get(genre));
-//                }
-//            }
+            for (var genre : genres) {
+                if (!genresMap.containsKey(genre)) {
+                    genresMap.put(genre, idGen);
+                    Add.addGenre(connectionDB.connection, new Genre(idGen.toString(), genre));
+                    Add.addGenreToMovie(connectionDB.connection, row.getCell(0).toString(), idGen);
+                    idGen++;
+                } else {
+                    Add.addGenreToMovie(connectionDB.connection, row.getCell(0).toString(), genresMap.get(genre));
+                }
+            }
         }
     }
 

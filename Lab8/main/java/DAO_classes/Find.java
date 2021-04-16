@@ -63,13 +63,11 @@ public class Find {
     static public String findMovieDurationByIdFixed(Connection connection, String id) throws SQLException {
         Statement statement = connection.createStatement();
         String sql = String.format("select duration from movies where id='%s'", id);
-        System.out.println(sql);
         ResultSet result = statement.executeQuery(sql);
-        System.out.println("Aici");
         while (result.next()) {
             System.out.println(result.getString(1));
+            return result.getString(1);
         }
-        System.out.println();
         return null;
     }
 
@@ -78,7 +76,7 @@ public class Find {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Genre: ");
         String name = scanner.nextLine();
-        String sql = String.format("SELECT M.ID,M.TITLE,M.RELEASE_DATE,M.DURATION,M.SCORE FROM MOVIES M JOIN MOVIES_TO_GENRES MTG ON M.ID=MTG.MOVIE_ID JOIN GENRES G ON MTG.GENRE_ID=G.ID WHERE G.NAME='%s'",name);
+        String sql = String.format("SELECT M.ID,M.TITLE,M.RELEASE_DATE,M.DURATION,M.SCORE FROM MOVIES M JOIN MOVIES_TO_GENRES MTG ON M.ID=MTG.MOVIE_ID JOIN GENRES G ON MTG.GENRE_ID=G.ID WHERE G.NAME='%s'", name);
         ResultSet result = statement.executeQuery(sql);
         while (result.next()) {
             System.out.println(result.getString(1) + "\t\t" + result.getString(2) + "\t\t" + result.getString(3) + "\t\t" + result.getString(4) + "\t\t" + result.getString(5));
