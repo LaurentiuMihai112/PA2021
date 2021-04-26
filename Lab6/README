@@ -1,2 +1,0 @@
-Compulsory + "Add support for drawing multiple types of components. Consider creating a new panel, containing a list of available shapes.
-The configuration panel must adapt according to the type of the selected shape. Implement at least two types of shapes." (Optional)
