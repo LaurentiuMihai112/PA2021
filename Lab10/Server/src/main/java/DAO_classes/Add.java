@@ -23,4 +23,8 @@ public class Add {
         sql = String.format("INSERT INTO friends VALUES(%d,%d)", friend.getId(), user.getId());
         statement.execute(sql);
     }
+    public static void addMessage(User user, String message) throws SQLException {
+        Connection connection = ConnectionDB.getInstance().connection;
+        Statement statement = connection.createStatement();
+    }
 }

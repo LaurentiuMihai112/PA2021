@@ -64,6 +64,21 @@ public class ClientCommand implements Runnable {
                         }
                         break;
                     case "friend":
+                        if (connectedUser == null) {
+                            write.writeUTF("You must be connected");
+                        } else {
+                            StringBuilder response = new StringBuilder("Added:\n");
+                            for (int i = 1; i < components.length; i++) {
+                                User newFriend = Select.getUserByName(components[i]);
+                                if (newFriend != null) {
+                                    Add.addFriend(connectedUser, newFriend);
+                                    response.append(newFriend.getName()).append(" (OK)\n");
+                                } else {
+                                    response.append(components[i]).append(" (Not existent user)\n");
+                                }
+                            }
+                            write.writeUTF(String.valueOf(response));
+                        }
                         break;
                     case "send":
                         break;
