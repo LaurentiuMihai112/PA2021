@@ -8,8 +8,7 @@ public class ServerSocketClass {
     int port;
     Socket socket = null;
     ServerSocket server = null;
-    DataInputStream read = null;
-    DataOutputStream write = null;
+
 
     public ServerSocketClass(int port) {
         this.port = port;

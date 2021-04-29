@@ -37,12 +37,12 @@ public class Client {
 
         // keep reading until "Over" is input
         Scanner scanner = new Scanner(System.in);
-        while (!line.equals("Over")) {
+        while (!line.equals("exit")) {
             try {
                 line = scanner.nextLine();
                 write.writeUTF(line);
-                line = read.readUTF();
-                System.out.println(line);
+                System.out.println(read.readUTF());
+                System.out.println(read.readUTF());
             } catch (IOException i) {
                 System.out.println(i);
             }
