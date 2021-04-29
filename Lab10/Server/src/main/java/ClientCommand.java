@@ -81,8 +81,30 @@ public class ClientCommand implements Runnable {
                         }
                         break;
                     case "send":
+                        if (connectedUser == null) {
+                            write.writeUTF("You must be connected");
+                        } else {
+                            StringBuilder message = new StringBuilder();
+                            for (int i = 1; i < components.length; i++) {
+                                message.append(components[i]).append(" ");
+                            }
+                            String response = Add.addMessage(connectedUser, String.valueOf(message));
+                            write.writeUTF(response);
+                        }
                         break;
                     case "read":
+                        if (connectedUser == null) {
+                            write.writeUTF("You must be connected");
+                        } else if (components.length > 1) {
+                            write.writeUTF("Command not valid!");
+                        } else {
+                            var messages = Select.getMessages(connectedUser.getId());
+                            StringBuilder response = new StringBuilder();
+                            for (String message : messages) {
+                                response.append(message).append("\n");
+                            }
+                            write.writeUTF(String.valueOf(response));
+                        }
                         break;
                     case "stop":
                         break;

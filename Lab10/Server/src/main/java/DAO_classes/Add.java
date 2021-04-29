@@ -6,6 +6,7 @@ import objects.User;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class Add {
     static public void addUser(User user) throws SQLException {
@@ -23,8 +24,21 @@ public class Add {
         sql = String.format("INSERT INTO friends VALUES(%d,%d)", friend.getId(), user.getId());
         statement.execute(sql);
     }
-    public static void addMessage(User user, String message) throws SQLException {
+
+    public static String addMessage(User user, String message) throws SQLException {
         Connection connection = ConnectionDB.getInstance().connection;
-        Statement statement = connection.createStatement();
+        List<User> friends = Select.getFriendsById(user.getId());
+        if (!friends.isEmpty()) {
+            Statement statement = connection.createStatement();
+            String sql;
+            for (User friend : friends) {
+                sql = String.format("Insert into messages values(%d,%d,'%s')", user.getId(), friend.getId(), message);
+                statement.execute(sql);
+            }
+            return "Message sent to all friends";
+        } else {
+            return "No message sent, you have no friends";
+        }
+
     }
 }
