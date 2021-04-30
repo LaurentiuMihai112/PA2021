@@ -4,6 +4,7 @@ import database.ConnectionDB;
 import objects.User;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -17,12 +18,17 @@ public class Add {
     }
 
     static public void addFriend(User user, User friend) throws SQLException {
+        //TODO verify existence of the row before
         Connection connection = ConnectionDB.getInstance().connection;
         Statement statement = connection.createStatement();
-        String sql = String.format("INSERT INTO friends VALUES(%d,%d)", user.getId(), friend.getId());
-        statement.execute(sql);
-        sql = String.format("INSERT INTO friends VALUES(%d,%d)", friend.getId(), user.getId());
-        statement.execute(sql);
+        String sql = String.format("Select * from friends where id_friend1=%d and id_friend2=%d", user.getId(), friend.getId());
+        ResultSet result = statement.executeQuery(sql);
+        if (!result.next()) {
+            sql = String.format("INSERT INTO friends VALUES(%d,%d)", user.getId(), friend.getId());
+            statement.execute(sql);
+            sql = String.format("INSERT INTO friends VALUES(%d,%d)", friend.getId(), user.getId());
+            statement.execute(sql);
+        }
     }
 
     public static String addMessage(User user, String message) throws SQLException {
