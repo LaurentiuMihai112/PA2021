@@ -20,11 +20,16 @@ public class Client {
         System.out.println("Connected");
 
         String line = "";
+        String response = "";
         Scanner scanner = new Scanner(System.in);
         while (!line.equals("exit")) {
             line = scanner.nextLine();
             write.writeUTF(line);
+            response = read.readUTF();
             System.out.println(read.readUTF());
+            if ("Server stopped".equals(response)) {
+                break;
+            }
             System.out.println(read.readUTF());
         }
 

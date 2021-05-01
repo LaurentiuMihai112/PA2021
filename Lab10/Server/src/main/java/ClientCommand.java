@@ -29,8 +29,13 @@ public class ClientCommand implements Runnable {
                 line = read.readUTF();
                 System.out.print("Received -> ");
                 System.out.println(line);
-                write.writeUTF("Request received");
                 String[] components = line.split(" ");
+                if (!Server.serverRunning) {
+                    write.writeUTF("Server stopped");
+                    break;
+                } else {
+                    write.writeUTF("Request received");
+                }
                 switch (components[0]) {
                     case "register":
                         if (components.length > 2) {
@@ -107,6 +112,14 @@ public class ClientCommand implements Runnable {
                         }
                         break;
                     case "stop":
+                        if (connectedUser == null) {
+                            write.writeUTF("You must be connected");
+                        } else if (components.length > 1) {
+                            write.writeUTF("Command not valid!");
+                        } else if (Server.serverRunning) {
+                            write.writeUTF("Stopping server");
+                            Server.serverRunning = false;
+                        }
                         break;
                     case "logout":
                         connectedUser = null;
