@@ -30,6 +30,9 @@ public class Client {
             if ("Server stopped".equals(response)) {
                 break;
             }
+            if ("Connection timed out".equals(response)) {
+                break;
+            }
             System.out.println(read.readUTF());
         }
 

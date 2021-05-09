@@ -24,12 +24,19 @@ public class ClientCommand implements Runnable {
         User connectedUser = null;
         String line = "";
         boolean exit = false;
+        ConnectionTimeOut connectionTimeOut = new ConnectionTimeOut(300);
+        Thread thread = new Thread(connectionTimeOut);
+        thread.start();
         while (!exit) {
             try {
                 line = read.readUTF();
                 System.out.print("Received -> ");
                 System.out.println(line);
                 String[] components = line.split(" ");
+                if(connectionTimeOut.connectionTimedOut){
+                    write.writeUTF("Connection timed out");
+                    break;
+                }
                 if (!Server.serverRunning) {
                     write.writeUTF("Server stopped");
                     break;
