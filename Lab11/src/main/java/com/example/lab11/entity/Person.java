@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "persons")
-public class Person {
+public class Person implements Comparable<Person> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -15,7 +15,7 @@ public class Person {
     @Column(unique = true)
     private String username;
 
-    @OneToMany
+    @ManyToMany
     private final Set<Person> friends = new HashSet<>();
 
     public Person(String username) {
@@ -49,4 +49,16 @@ public class Person {
         friends.removeIf(fr -> fr.getUsername().equals(friend.getUsername()));
     }
 
+    public Set<Person> getFriends() {
+        return friends;
+    }
+
+
+
+    @Override
+    public int compareTo(Person o) {
+        Integer mySize = this.friends.size();
+        Integer otherSize = o.friends.size();
+        return mySize.compareTo(otherSize);
+    }
 }

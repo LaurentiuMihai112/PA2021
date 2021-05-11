@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class PersonController {
 
     @GetMapping("person/list")
     public List<Person> getUsers() {
-        return personService.getUses();
+        return personService.getUsers();
     }
 
     @PostMapping("person/add")
@@ -60,5 +61,30 @@ public class PersonController {
             return new ResponseEntity<>("Person deleted successfully", HttpStatus.OK);
         }
         return new ResponseEntity<>("Person doesnt exist", HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("person/add_friend")
+    public ResponseEntity<Object> addFriend(@RequestParam String name, String friend) {
+        Person person = personService.getPersonByUsername(name);
+        if (person == null) {
+            return new ResponseEntity<>("Person doesnt exist", HttpStatus.BAD_REQUEST);
+        }
+        Person newFriend = personService.getPersonByUsername(friend);
+        if (newFriend == null) {
+            return new ResponseEntity<>("Friend doesnt exist", HttpStatus.BAD_REQUEST);
+        }
+        person.addFriend(newFriend);
+        personService.updatePerson(person);
+        return new ResponseEntity<>("Friend added", HttpStatus.OK);
+    }
+
+    @GetMapping("k-popular")
+    public List<String> getMostPopular(@RequestParam Integer limit) {
+        var list = personService.getMostPopular(limit);
+        List<String> names = new ArrayList<>();
+        for (Person person : list) {
+            names.add(person.getUsername());
+        }
+        return names;
     }
 }
