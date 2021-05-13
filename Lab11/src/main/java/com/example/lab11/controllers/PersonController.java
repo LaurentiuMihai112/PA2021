@@ -103,7 +103,7 @@ public class PersonController {
         List<String> names = new ArrayList<>();
         for (Person person : list) {
             names.add(person.getUsername());
-            if (list.indexOf(person)+1 == limit) {
+            if (list.indexOf(person) + 1 == limit) {
                 break;
             }
         }
@@ -116,10 +116,21 @@ public class PersonController {
         List<String> names = new ArrayList<>();
         for (Person person : list) {
             names.add(person.getUsername());
-            if (list.indexOf(person)+1 == limit) {
+            if (list.indexOf(person) + 1 == limit) {
                 break;
             }
         }
         return names;
     }
+
+    @GetMapping("person/most_important")
+    public List<String> getMostImportant() {
+        var list = personService.getMostImportant();
+        List<String> names = new ArrayList<>();
+        for (Person person : list) {
+            names.add(person.getUsername());
+        }
+        return names;
+    }
 }
+

@@ -2,6 +2,7 @@ package com.example.lab11.services;
 
 import com.example.lab11.entity.Person;
 import com.example.lab11.repositories.PersonRepository;
+import com.example.lab11.util.Graph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,5 +91,21 @@ public class PersonService {
             return true;
         }
         return false;
+    }
+
+    public List<Person> getMostImportant() {
+        var persons = personRepository.findAll();
+        Graph network = new Graph(20);
+        List<Person> MVPs = new ArrayList<>();
+        for (Person person : persons) {
+            for (Person friend : person.getFriends()) {
+                network.addEdge(person.getId().intValue(), friend.getId().intValue());
+            }
+        }
+        var idList = network.findCutVertices();
+        for (Integer i : idList) {
+            MVPs.add(personRepository.findPersonById(i.longValue()));
+        }
+        return MVPs;
     }
 }
