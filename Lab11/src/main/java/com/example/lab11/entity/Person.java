@@ -54,11 +54,15 @@ public class Person implements Comparable<Person> {
     }
 
 
-
     @Override
     public int compareTo(Person o) {
         Integer mySize = this.friends.size();
         Integer otherSize = o.friends.size();
-        return mySize.compareTo(otherSize);
+        return otherSize.compareTo(mySize);
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + id + ", username='" + username;
     }
 }
