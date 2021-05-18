@@ -1,4 +1,4 @@
-package DAO_classes;
+package util;
 
 import database.ConnectionDB;
 import objects.User;

@@ -1,5 +1,5 @@
-import DAO_classes.Add;
-import DAO_classes.Select;
+import util.Add;
+import util.Select;
 import objects.User;
 
 import java.io.DataInputStream;
@@ -33,6 +33,7 @@ public class ClientCommand implements Runnable {
                 System.out.print("Received -> ");
                 System.out.println(line);
                 String[] components = line.split(" ");
+                connectionTimeOut.setSeconds(180);
                 if(connectionTimeOut.connectionTimedOut){
                     write.writeUTF("Connection timed out");
                     break;

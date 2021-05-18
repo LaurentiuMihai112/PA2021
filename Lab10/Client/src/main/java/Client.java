@@ -26,6 +26,7 @@ public class Client {
             line = scanner.nextLine();
             write.writeUTF(line);
             response = read.readUTF();
+            System.out.println(response);
             System.out.println(read.readUTF());
             if ("Server stopped".equals(response)) {
                 break;
@@ -33,7 +34,6 @@ public class Client {
             if ("Connection timed out".equals(response)) {
                 break;
             }
-            System.out.println(read.readUTF());
         }
 
         write.close();
